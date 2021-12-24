@@ -1,5 +1,5 @@
 node('master') {
-    currentBuild.displayName = "${BUILD_ID} ${Platform}"
+    currentBuild.displayName = "${BUILD_ID} ${branch_name}"
     try {
         stage('Prepare'){
             dir('pyezml'){
@@ -20,7 +20,7 @@ node('master') {
                     sh '''
                     . venv/bin/activate
                     export LOCAL_DRIVER=False
-                    pytest -x -v -s --durations=0 --config configs/platform_${Platform}.json ${test_script} --junitxml=junit_report.xml
+                    pytest -x -v -s --durations=0 --config platform_current.json ${test_script} --junitxml=junit_report.xml
                     '''
             }
         }
