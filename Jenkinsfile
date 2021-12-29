@@ -1,10 +1,12 @@
 node('master') {
     currentBuild.displayName = "${BUILD_ID} ${branch_name}"
+    def masterFilePath = input message: 'Upload your archive', parameters: [file(description: 'archive', name: uploadedFile)]
     try {
         stage('Prepare'){
             dir('pyezml'){
                                         checkout([$class: 'GitSCM', branches: [[name: '*/${branch_name}']], userRemoteConfigs: [[url: '/var/jenkins_home/repo/pyezml.git']]])
                     sh '''
+                    pwd
                     rm -f images/*.png
                     rm -f *.log
                     if ! [ -f ./venv ];then
@@ -28,6 +30,8 @@ node('master') {
                     ls ../../..
                     printf "\n\n\n\n\n\n\n\n\n"
                     ls ../../../..
+                    printf "\n\n\n\n\n\n\n\n\n"
+                    echo ${platform_current}
                     printf "\n\n\n\n\n\n\n\n\n"
                     . venv/bin/activate
                     export LOCAL_DRIVER=False
