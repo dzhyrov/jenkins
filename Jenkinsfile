@@ -1,6 +1,5 @@
 node('master') {
     currentBuild.displayName = "${BUILD_ID} ${branch_name}"
-    def masterFilePath = input message: 'Upload your archive', parameters: [file(description: 'archive', name: uploadedFile)]
     try {
         stage('Prepare'){
             dir('pyezml'){
