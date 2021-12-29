@@ -18,6 +18,9 @@ node('master') {
         stage('Run'){
             dir('pyezml'){
                     sh '''
+                    printf "\n\n\n\n\n\n\n\n\n"
+                    pwd
+                    printf "\n\n\n\n\n\n\n\n\n"
                     . venv/bin/activate
                     export LOCAL_DRIVER=False
                     pytest -x -v -s --durations=0 --config platform_current.json ${test_script} --junitxml=junit_report.xml
