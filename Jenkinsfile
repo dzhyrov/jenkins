@@ -23,6 +23,8 @@ node('master') {
                     printf "\n\n\n\n\n\n\n\n\n"
                     ls ..
                     printf "\n\n\n\n\n\n\n\n\n"
+                    ls ../..
+                    printf "\n\n\n\n\n\n\n\n\n"
                     . venv/bin/activate
                     export LOCAL_DRIVER=False
                     pytest -x -v -s --durations=0 --config platform_current.json ${test_script} --junitxml=junit_report.xml
