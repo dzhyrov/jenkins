@@ -30,7 +30,7 @@ node('master') {
                     printf "\n\n\n\n\n\n\n\n\n"
                     ls ../../../..
                     printf "\n\n\n\n\n\n\n\n\n"
-                    echo ${platform_current}
+                    cat ${platform_current}
                     printf "\n\n\n\n\n\n\n\n\n"
                     . venv/bin/activate
                     export LOCAL_DRIVER=False
