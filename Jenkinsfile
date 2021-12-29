@@ -19,7 +19,7 @@ node('master') {
             dir('pyezml'){
                     sh '''
                     printf "\n\n\n\n\n\n\n\n\n"
-                    pwd
+                    ls
                     printf "\n\n\n\n\n\n\n\n\n"
                     . venv/bin/activate
                     export LOCAL_DRIVER=False
