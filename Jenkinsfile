@@ -3,7 +3,7 @@ library "file-workaround"
 node('master') {
     currentBuild.displayName = "${BUILD_ID} ${branch_name}"
     stage("Config upload") {
-        def file_in_workspace = unstashParam "platform_current"
+        unstashParam "platform_current"
     }
     try {
         stage('Prepare'){
