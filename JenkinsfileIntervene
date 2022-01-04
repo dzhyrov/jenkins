@@ -1,11 +1,10 @@
-library "file-workaround"
-
 node('master') {
     currentBuild.displayName = "${BUILD_ID} ${branch_name}"
     try {
         stage("upload") {
-            def file_in_workspace = unstashParam "platform_current"
-            sh "cat ${file_in_workspace}"
+            def inputFile = input message: 'Upload platform config', parameters: [file(name: 'platform_current')]
+            new hudson.FilePath(new File("$workspace/pyezml/platform_current.json")).copyFrom(inputFile)
+            inputFile.delete()
         }
         stage('Prepare'){
             dir('pyezml'){

@@ -4,15 +4,8 @@ node('master') {
     currentBuild.displayName = "${BUILD_ID} ${branch_name}"
     try {
         stage("upload") {
-            dir('pyezml'){
-                sh "printf '\n\n\n\n\n\n\n\n'"
-                sh "ls"
-                sh "printf '\n\n\n\n\n\n\n\n'"
-                sh "ls .."
-                sh "printf '\n\n\n\n\n\n\n\n'"
-                def file_in_workspace = unstashParam "platform_current"
-                sh "cat ${file_in_workspace}"
-            }
+            def file_in_workspace = unstashParam "platform_current"
+            sh "cat ${file_in_workspace}"
         }
         stage('Prepare'){
             dir('pyezml'){
