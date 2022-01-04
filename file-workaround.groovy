@@ -41,3 +41,5 @@ def getComputer(name){
 
     error "Cannot find computer for file parameter workaround"
 }
+
+return this
