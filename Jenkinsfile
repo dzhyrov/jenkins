@@ -10,7 +10,6 @@ node('master') {
                 sh "printf '\n\n\n\n\n\n\n\n'"
                 sh "ls .."
                 sh "printf '\n\n\n\n\n\n\n\n'"
-                sh "cat file-workaround.groovy"
                 def file_in_workspace = unstashParam "platform_current"
                 sh "cat ${file_in_workspace}"
             }
