@@ -1,9 +1,14 @@
 node('master') {
     currentBuild.displayName = "${BUILD_ID} ${branch_name}"
     try {
+        stage("upload") {
+            def inputFile = input message: 'Upload file', parameters: [file(name: 'data.zip')]
+            new hudson.FilePath(new File("$workspace/data.zip")).copyFrom(inputFile)
+            inputFile.delete()
+        }
         stage('Prepare'){
             dir('pyezml'){
-                                        checkout([$class: 'GitSCM', branches: [[name: '*/${branch_name}']], userRemoteConfigs: [[url: '/var/jenkins_home/repo/pyezml.git']]])
+                    checkout([$class: 'GitSCM', branches: [[name: '*/${branch_name}']], userRemoteConfigs: [[url: '/var/jenkins_home/repo/pyezml.git']]])
                     sh '''
                     pwd
                     rm -f images/*.png
