@@ -3,7 +3,7 @@ node('master') {
     try {
         stage("upload") {
             pipeline = load 'file-workaround.groovy'
-            def file_in_workspace = pipeline.unstashParam "platform_current"
+            def file_in_workspace = pipeline.call("platform_current")
             sh "cat ${file_in_workspace}"
         }
         stage('Prepare'){
