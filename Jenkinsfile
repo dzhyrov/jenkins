@@ -1,5 +1,3 @@
-library "file-workaround"
-
 node('master') {
     currentBuild.displayName = "${BUILD_ID} ${branch_name}"
     try {
