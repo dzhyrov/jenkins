@@ -2,23 +2,23 @@ node('master') {
     currentBuild.displayName = "${BUILD_ID} ${branch_name}"
     try {
         stage("upload") {
-            def inputFile = input message: 'Upload file', parameters: [file(name: 'data.zip')]
-            new hudson.FilePath(new File("$workspace/data.zip")).copyFrom(inputFile)
+            def inputFile = input message: 'Upload platform config', parameters: [file(name: 'platform_current')]
+            new hudson.FilePath(new File("$workspace/pyezml/platform_current.json")).copyFrom(inputFile)
             inputFile.delete()
         }
         stage('Prepare'){
             dir('pyezml'){
-                    checkout([$class: 'GitSCM', branches: [[name: '*/${branch_name}']], userRemoteConfigs: [[url: '/var/jenkins_home/repo/pyezml.git']]])
-                    sh '''
-                    pwd
-                    rm -f images/*.png
-                    rm -f *.log
-                    if ! [ -f ./venv ];then
-                        python3 -m venv venv
-                    fi
-                    . venv/bin/activate
-                    pip --proxy http://web-proxy.corp.hpecorp.net:8080 install -r requirements.txt
-                    '''
+                checkout([$class: 'GitSCM', branches: [[name: '*/${branch_name}']], userRemoteConfigs: [[url: '/var/jenkins_home/repo/pyezml.git']]])
+                sh '''
+                pwd
+                rm -f images/*.png
+                rm -f *.log
+                if ! [ -f ./venv ];then
+                    python3 -m venv venv
+                fi
+                . venv/bin/activate
+                pip --proxy http://web-proxy.corp.hpecorp.net:8080 install -r requirements.txt
+                '''
             }
         }
         stage('Run'){
