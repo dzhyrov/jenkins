@@ -4,7 +4,6 @@ node('master') {
     currentBuild.displayName = "${BUILD_ID} ${branch_name}"
     stage("upload") {
         def file_in_workspace = unstashParam "platform_current"
-        sh "cat ${file_in_workspace}"
     }
     try {
         stage('Prepare'){
