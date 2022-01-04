@@ -2,6 +2,7 @@ node('master') {
     currentBuild.displayName = "${BUILD_ID} ${branch_name}"
     try {
         stage("upload") {
+            sh "ls"
             pipeline = load 'file-workaround.groovy'
             def file_in_workspace = pipeline.call("platform_current")
             sh "cat ${file_in_workspace}"
