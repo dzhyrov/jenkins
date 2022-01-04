@@ -1,16 +1,6 @@
 node('master') {
     currentBuild.displayName = "${BUILD_ID} ${branch_name}"
     try {
-        stage("upload") {
-            sh "printf '\n\n\n\n\n\n\n\n'"
-            sh "ls"
-            sh "printf '\n\n\n\n\n\n\n\n'"
-            sh "ls .."
-            sh "printf '\n\n\n\n\n\n\n\n'"
-            pipeline = load 'file-workaround.groovy'
-            def file_in_workspace = pipeline.call("platform_current")
-            sh "cat ${file_in_workspace}"
-        }
         stage('Prepare'){
             dir('pyezml'){
                 checkout([$class: 'GitSCM', branches: [[name: '*/${branch_name}']], userRemoteConfigs: [[url: '/var/jenkins_home/repo/pyezml.git']]])
@@ -24,6 +14,18 @@ node('master') {
                 . venv/bin/activate
                 pip --proxy http://web-proxy.corp.hpecorp.net:8080 install -r requirements.txt
                 '''
+            }
+        }
+        stage("upload") {
+            dir('pyezml'){
+                sh "printf '\n\n\n\n\n\n\n\n'"
+                sh "ls"
+                sh "printf '\n\n\n\n\n\n\n\n'"
+                sh "ls .."
+                sh "printf '\n\n\n\n\n\n\n\n'"
+                pipeline = load 'file-workaround.groovy'
+                def file_in_workspace = pipeline.call("platform_current")
+                sh "cat ${file_in_workspace}"
             }
         }
         stage('Run'){
